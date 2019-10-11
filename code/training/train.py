@@ -32,10 +32,8 @@ from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.externals import joblib
 import numpy as np
-import test_db_util
 
 
-test_db_util.print()
 parser = argparse.ArgumentParser("train")
 parser.add_argument(
     "--release_id",

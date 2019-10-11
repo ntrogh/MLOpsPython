@@ -1,5 +1,6 @@
 import os
 import argparse
+import test_db_util
 
 parser = argparse.ArgumentParser("train")
 parser.add_argument(
@@ -8,6 +9,7 @@ parser.add_argument(
     help="folder",
 )
 
+test_db_util.print()
 args, unknown = parser.parse_known_args()
 folder = args.AZUREML_SCRIPT_DIRECTORY_NAME
 
