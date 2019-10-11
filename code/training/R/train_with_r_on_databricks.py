@@ -1,5 +1,7 @@
 import os
 import argparse
+import sys
+sys.path.append(os.path.abspath("."))  # NOQA: E402
 from test_db_util import test_print
 
 parser = argparse.ArgumentParser("train")
