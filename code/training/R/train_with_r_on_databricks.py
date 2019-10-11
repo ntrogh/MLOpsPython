@@ -9,7 +9,7 @@ parser.add_argument(
 )
 args, unknown = parser.parse_known_args()
 folder = args.AZUREML_SCRIPT_DIRECTORY_NAME
-sys.path.append(os.path.abspath("/dbfs/" + folder))  # NOQA: E402
+sys.path.append("/dbfs/" + folder)  # NOQA: E402
 from test_db_util import test_print  # NOQA: E402
 
 
