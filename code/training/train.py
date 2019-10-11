@@ -35,6 +35,7 @@ import numpy as np
 import test_db_util
 
 
+test_db_util.print()
 parser = argparse.ArgumentParser("train")
 parser.add_argument(
     "--release_id",
