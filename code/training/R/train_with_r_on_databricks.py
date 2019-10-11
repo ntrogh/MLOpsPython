@@ -16,4 +16,3 @@ os.system("cd " + "/dbfs/" + folder +
           " && Rscript r_train.r && ls -ltr model.rds")
 
 test_db_util.print()
-
