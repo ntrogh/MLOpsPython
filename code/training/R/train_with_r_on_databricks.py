@@ -1,6 +1,6 @@
 import os
 import argparse
-import test_db_util
+from test_db_util import test_print
 
 parser = argparse.ArgumentParser("train")
 parser.add_argument(
@@ -15,4 +15,4 @@ folder = args.AZUREML_SCRIPT_DIRECTORY_NAME
 os.system("cd " + "/dbfs/" + folder +
           " && Rscript r_train.r && ls -ltr model.rds")
 
-test_db_util.print()
+test_print()
