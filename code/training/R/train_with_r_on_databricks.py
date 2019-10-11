@@ -1,7 +1,7 @@
 import os
 import argparse
 import sys
-parser = argparse.ArgumentParser("train")
+parser = argparse.ArgumentParser()
 parser.add_argument(
     "--AZUREML_SCRIPT_DIRECTORY_NAME",
     type=str,
