@@ -32,6 +32,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.externals import joblib
 import numpy as np
+import test_db_util
 
 
 parser = argparse.ArgumentParser("train")
