@@ -9,9 +9,11 @@ parser.add_argument(
     help="folder",
 )
 
-test_db_util.print()
 args, unknown = parser.parse_known_args()
 folder = args.AZUREML_SCRIPT_DIRECTORY_NAME
 
 os.system("cd " + "/dbfs/" + folder +
           " && Rscript r_train.r && ls -ltr model.rds")
+
+test_db_util.print()
+
