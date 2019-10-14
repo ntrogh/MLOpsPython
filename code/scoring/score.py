@@ -42,6 +42,7 @@ def run(raw_data):
     try:
         data = json.loads(raw_data)["data"]
         data = numpy.array(data)
+        print(data)
         result = model.predict(data)
         return json.dumps({"result": result.tolist()})
     except Exception as e:
