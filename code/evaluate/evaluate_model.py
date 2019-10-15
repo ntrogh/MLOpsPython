@@ -110,5 +110,6 @@ if promote_new_model:
     new_model_run.register_model(
         model_name=model_name,
         model_path=model_path,
-        properties={"release_id": release_id})
+        properties={"release_id": release_id},
+        tags={"run_id": new_model_run_id})
     print("Registered new model!")
