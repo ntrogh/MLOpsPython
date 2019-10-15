@@ -92,7 +92,7 @@ print("Run ID for last run: {}".format(run_id))
 
 model = run.register_model(model_name=model_name,
                            model_path="./outputs/" + model_name,
-                           tags={"area": "diabetes", "type": "regression", 
+                           tags={"area": "diabetes", "type": "regression",
                                  "run_id": run_id})
 os.chdir("..")
 print(
