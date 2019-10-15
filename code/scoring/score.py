@@ -27,28 +27,42 @@ import json
 import numpy
 from azureml.core.model import Model
 import joblib
+import logging
 
 
 def init():
     global model
+    global logger
+
+    init_logger()
 
     # load the model from file into a global object
     model_path = Model.get_model_path(
         model_name="sklearn_regression_model.pkl")
     model = joblib.load(model_path)
 
+def init_logger():
+    global logger
+
+    logging.basicConfig(level=default_level)
+    print('logconf fall back to default')
+    logger = logging.getLogger('score')
+
 
 def run(raw_data):
     try:
+        logger.info('raw input data {}'.format(raw_data))
+
         data = json.loads(raw_data)["data"]
-        print("Here comes the JSON data...")
-        print(data)
+        logger.info('data node {}'.format(data))
 
         data = numpy.array(data)
-        print("Here comes the numpy data...")
-        print(data)
+        logger.info('data in numpy {}'.format(data))
 
         result = model.predict(data)
+
+        logger.info('Prediction result {}'.format(result))
+
         return json.dumps({"result": result.tolist()})
     except Exception as e:
         result = str(e)
