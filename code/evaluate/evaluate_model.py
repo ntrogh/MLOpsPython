@@ -97,8 +97,9 @@ try:
     if new_model_mse < production_model_mse:
         promote_new_model = True
         print("New trained model performs better, thus it will be registered")
-except Exception:
+except Exception as e:
     promote_new_model = True
+    print('Exception: {}'.format(e))
     print("This is the first model to be trained, \
           thus nothing to evaluate for now")
 
