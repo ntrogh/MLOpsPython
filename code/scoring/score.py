@@ -41,10 +41,11 @@ def init():
         model_name="sklearn_regression_model.pkl")
     model = joblib.load(model_path)
 
+
 def init_logger():
     global logger
 
-    logging.basicConfig(level=default_level)
+    logging.basicConfig(level=logging.INFO)
     print('logconf fall back to default')
     logger = logging.getLogger('score')
 
