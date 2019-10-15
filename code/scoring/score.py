@@ -37,8 +37,7 @@ def init():
     init_logger()
 
     # load the model from file into a global object
-    model_path = Model.get_model_path(
-        model_name="sklearn_regression_model.pkl")
+    model_path = Model.get_model_path(model_name="sklearn_regression_model.pkl")
     model = joblib.load(model_path)
 
 
@@ -46,27 +45,22 @@ def init_logger():
     global logger
 
     logging.basicConfig(level=logging.INFO)
-    print('logconf fall back to default')
     logger = logging.getLogger('score')
 
 
 def run(raw_data):
     try:
-        logger.info('raw input data {}'.format(raw_data))
+        logger.info('Input data {}'.format(raw_data))
 
         data = json.loads(raw_data)["data"]
-        logger.info('data node {}'.format(data))
-
         data = numpy.array(data)
-        logger.info('data in numpy {}'.format(data))
-
         result = model.predict(data)
-
-        logger.info('Prediction result {}'.format(result))
 
         return json.dumps({"result": result.tolist()})
     except Exception as e:
         result = str(e)
+        logger.error('Error during inference: {}'.format(result))
+
         return json.dumps({"error": result})
 
 
