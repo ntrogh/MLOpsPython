@@ -23,7 +23,6 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE CODE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
-from azureml.core.run import Run
 import os
 import argparse
 from sklearn.datasets import load_diabetes
@@ -32,6 +31,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.externals import joblib
 import numpy as np
+from azureml.core.run import Run
 
 
 parser = argparse.ArgumentParser("train")
@@ -59,8 +59,11 @@ run = Run.get_context()
 exp = run.experiment
 ws = run.experiment.workspace
 
+# Load the scikit-learn diabetes ML dataset
 X, y = load_diabetes(return_X_y=True)
 columns = ["age", "gender", "bmi", "bp", "s1", "s2", "s3", "s4", "s5", "s6"]
+
+# Split dataset in training and test dataset
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=0)
 data = {"train": {"X": X_train, "y": y_train},
@@ -68,26 +71,30 @@ data = {"train": {"X": X_train, "y": y_train},
 
 print("Running train.py")
 
-# Randomly pic alpha
+# Randomly pick alpha
 alphas = np.arange(0.0, 1.0, 0.05)
 alpha = alphas[np.random.choice(alphas.shape[0], 1, replace=False)][0]
 print(alpha)
 run.log("alpha", alpha)
+
+# Use a ridge regression algorithm
 reg = Ridge(alpha=alpha)
+
+# Train the model using our training data
 reg.fit(data["train"]["X"], data["train"]["y"])
+
+# Predict the diabetes decease progression after one year
 preds = reg.predict(data["test"]["X"])
+
 run.log("mse", mean_squared_error(preds, data["test"]["y"]))
 
-
 # Save model as part of the run history
-
-# model_name = "."
-
 with open(model_name, "wb") as file:
     joblib.dump(value=reg, filename=model_name)
 
-# upload the model file explicitly into artifacts
+# Upload the model file explicitly into artifacts
 run.upload_file(name="./outputs/" + model_name, path_or_stream=model_name)
+
 print("Uploaded the model {} to experiment {}".format(
     model_name, run.experiment.name))
 dirpath = os.getcwd()
@@ -99,4 +106,5 @@ print(run.get_file_names())
 run.add_properties({"release_id": release_id, "run_type": "train"})
 print(f"added properties: {run.properties}")
 
+# Finalize the run
 run.complete()
